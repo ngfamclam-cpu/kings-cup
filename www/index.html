@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14110f">
+  <meta name="description" content="King's Cup without a deck of cards. Pass one phone around or cast it to the TV.">
+  <title>King's Cup</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Age gate: shown once per device -->
+  <section id="screen-age" class="screen" hidden>
+    <div class="panel center">
+      <div class="crown-big" aria-hidden="true">♛</div>
+      <h1>King's Cup</h1>
+      <p>This is a drinking game. Are you of legal drinking age where you live?</p>
+      <div class="row">
+        <button id="age-yes" class="btn primary">Yes, I am</button>
+        <button id="age-no" class="btn">No</button>
+      </div>
+      <p id="age-denied" class="muted" hidden>Come back when you're old enough. Plenty of the cards work with soft drinks too.</p>
+    </div>
+  </section>
+
+  <!-- Setup: optional player names -->
+  <section id="screen-setup" class="screen" hidden>
+    <div class="panel">
+      <h1><span aria-hidden="true">♛</span> King's Cup</h1>
+      <p class="muted">Add players to get turn reminders, or skip and just pass the phone.</p>
+      <form id="player-form" class="row">
+        <input id="player-input" type="text" maxlength="20" placeholder="Player name" autocomplete="off" enterkeyhint="done">
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <ul id="player-list" class="chips"></ul>
+      <div class="row stack-mobile">
+        <button id="start" class="btn primary big">Start game</button>
+        <button class="btn open-rules" type="button">House rules</button>
+        <button class="btn open-cast" type="button">Play on TV</button>
+      </div>
+      <button id="resume" class="btn link" hidden>Resume last game</button>
+      <p class="muted small">Drink responsibly. Water counts as a drink.</p>
+    </div>
+  </section>
+
+  <!-- Game -->
+  <section id="screen-game" class="screen game" hidden>
+    <header class="topbar">
+      <div class="kings" aria-label="Kings drawn">
+        <span class="king-slot">♛</span><span class="king-slot">♛</span><span class="king-slot">♛</span><span class="king-slot">♛</span>
+      </div>
+      <div id="remaining" class="muted"></div>
+      <div class="row tight">
+        <button class="icon-btn open-rules" title="House rules" aria-label="House rules">✎</button>
+        <button id="fullscreen" class="icon-btn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
+        <button id="menu" class="icon-btn" title="End game" aria-label="End game">✕</button>
+      </div>
+    </header>
+
+    <main class="table">
+      <button id="card" class="card back" aria-live="polite" aria-label="Draw a card">
+        <span class="card-corner tl"></span>
+        <span class="card-center"></span>
+        <span class="card-corner br"></span>
+        <span class="card-hint">Tap to draw</span>
+      </button>
+
+      <div class="info">
+        <div id="turn" class="turn"></div>
+        <h2 id="rule-title">Ready?</h2>
+        <p id="rule-text">Tap the deck to draw the first card.</p>
+        <form id="new-rule-form" class="row" hidden>
+          <input id="new-rule-input" type="text" maxlength="80" placeholder="Type the new rule (optional)" autocomplete="off" enterkeyhint="done">
+          <button class="btn" type="submit">Add</button>
+        </form>
+        <div id="status" class="status"></div>
+      </div>
+    </main>
+  </section>
+
+  <!-- End -->
+  <section id="screen-end" class="screen" hidden>
+    <div class="panel center">
+      <div class="crown-big" aria-hidden="true">♛</div>
+      <h1 id="end-title">The 4th King!</h1>
+      <p id="end-text"></p>
+      <div class="row">
+        <button id="again" class="btn primary big">New game</button>
+        <button id="keep-going" class="btn">Keep drawing</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- House rules editor -->
+  <dialog id="rules-dialog">
+    <form method="dialog" class="dialog-body">
+      <h2>House rules</h2>
+      <p class="muted small">Change any card. Saved on this device.</p>
+      <div id="rules-fields"></div>
+      <div class="row sticky-actions">
+        <button id="rules-save" class="btn primary" value="save">Save</button>
+        <button id="rules-reset" class="btn" type="button">Reset to defaults</button>
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Cast help -->
+  <dialog id="cast-dialog">
+    <form method="dialog" class="dialog-body">
+      <h2>Play on the TV</h2>
+      <p>Mirror your screen, then turn the phone sideways. The layout switches to a big-screen view.</p>
+      <ul class="steps">
+        <li><b>Android + Chromecast / Google TV:</b> swipe down for Quick Settings, tap <i>Cast</i> or <i>Screen cast</i> (<i>Smart View</i> on Samsung).</li>
+        <li><b>iPhone + Apple TV / AirPlay TV:</b> open Control Center, tap <i>Screen Mirroring</i>.</li>
+        <li><b>Laptop on Chrome:</b> menu ⋮ → <i>Cast…</i> → pick the TV, then press F for fullscreen.</li>
+      </ul>
+      <p class="muted small">On a keyboard, Space or Enter draws a card.</p>
+      <div class="row"><button class="btn primary">Got it</button></div>
+    </form>
+  </dialog>
+
+  <script src="rules.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

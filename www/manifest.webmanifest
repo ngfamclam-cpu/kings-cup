@@ -1,0 +1,14 @@
+{
+  "name": "King's Cup",
+  "short_name": "King's Cup",
+  "description": "King's Cup without a deck of cards.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#14110f",
+  "theme_color": "#14110f",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
